@@ -108,6 +108,22 @@ const FCard = ({ icon, title, desc, color, delay = 0 }) => {
   );
 };
 
+const SwipeCard = ({ children, delay = 0, direction = "swipeIn" }) => {
+  const [v, setV] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => e.isIntersecting && setV(true), { threshold: 0.1 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} style={{
+      opacity: v ? 1 : 0,
+      animation: v ? `${direction} 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms both` : "none",
+    }}>{children}</div>
+  );
+};
+
 const Chip = ({ label, selected, onClick, icon }) => (
   <button onClick={onClick} style={{
     display: "inline-flex", alignItems: "center", gap: 6, padding: "9px 16px", borderRadius: 100,
@@ -190,6 +206,14 @@ export default function App() {
         @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
         @keyframes si{from{transform:scale(0.92);opacity:0}to{transform:scale(1);opacity:1}}
         @keyframes pr{0%{box-shadow:0 0 0 0 rgba(52,211,153,0.5)}70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+        @keyframes swipeIn{from{opacity:0;transform:translateX(-60px) rotate(-2deg)}to{opacity:1;transform:translateX(0) rotate(0deg)}}
+        @keyframes swipeRight{from{opacity:0;transform:translateX(60px) rotate(2deg)}to{opacity:1;transform:translateX(0) rotate(0deg)}}
+        @keyframes zoomPop{from{opacity:0;transform:scale(0.7) rotate(-3deg)}to{opacity:1;transform:scale(1) rotate(0deg)}}
+        @keyframes slideUp{from{opacity:0;transform:translateY(40px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        @keyframes borderGlow{0%,100%{border-color:rgba(129,140,248,0.3)}50%{border-color:rgba(52,211,153,0.5)}}
+        @keyframes countPulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         *{box-sizing:border-box;margin:0;padding:0}::selection{background:rgba(129,140,248,0.3)}html{scroll-behavior:smooth}input:focus{outline:none}
         input[type=range]{-webkit-appearance:none;background:${C.nightSurface};height:5px;border-radius:3px;cursor:pointer}
         input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:${C.electric};cursor:pointer;border:3px solid ${C.nightCard}}
@@ -240,6 +264,76 @@ export default function App() {
         </div>
       </section>
 
+      {/* ═══ USP BLOCK — THE MONEY SECTION ═══ */}
+      <section style={{ padding: "20px 20px 60px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 0%, rgba(129,140,248,0.03) 30%, rgba(52,211,153,0.03) 70%, transparent 100%)", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <Reveal>
+            <div style={{
+              background: `linear-gradient(135deg, ${C.nightCard}, ${C.nightSurface})`,
+              border: `2px solid transparent`,
+              borderImage: "linear-gradient(135deg, rgba(129,140,248,0.4), rgba(52,211,153,0.4), rgba(251,113,133,0.3)) 1",
+              borderRadius: 0, padding: "48px 32px", position: "relative", overflow: "hidden",
+            }}>
+              <div style={{ position: "absolute", top: -80, right: -80, width: 250, height: 250, borderRadius: "50%", background: "radial-gradient(circle, rgba(52,211,153,0.12), transparent 70%)", filter: "blur(40px)", animation: "fl 8s ease-in-out infinite" }} />
+              <div style={{ position: "absolute", bottom: -60, left: -60, width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(129,140,248,0.1), transparent 70%)", filter: "blur(40px)", animation: "fl 10s ease-in-out infinite 3s" }} />
+
+              <div style={{ textAlign: "center", marginBottom: 36, position: "relative" }}>
+                <div style={{ display: "inline-block", padding: "6px 16px", borderRadius: 100, background: "rgba(52,211,153,0.12)", border: "1px solid rgba(52,211,153,0.25)", fontSize: 11, fontWeight: 700, color: C.mint, marginBottom: 16, letterSpacing: 1 }}>
+                  ZERO FRICTION. ALL SPEED.
+                </div>
+                <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 800, lineHeight: 1.1, letterSpacing: -1 }}>
+                  No Devs. No Tech Skills.{" "}
+                  <span style={{ background: `linear-gradient(135deg, ${C.mint}, ${C.amber})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Just Upload & Go.</span>
+                </h2>
+                <p style={{ fontSize: 15, color: C.textSoft, marginTop: 14, maxWidth: 520, margin: "14px auto 0", lineHeight: 1.7 }}>
+                  Drop in your past campaign data. Our AI learns what worked. You get better content tomorrow. That's it. That's the product.
+                </p>
+              </div>
+
+              {/* 3-COLUMN SPEED CARDS — animated */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16, position: "relative" }}>
+                {[
+                  { icon: "📤", time: "5 min", title: "Upload past data", desc: "CSV, screenshots, brand book — whatever you have. AI eats it all.", color: C.electric, anim: "swipeIn" },
+                  { icon: "🧠", time: "24 hours", title: "We wire everything", desc: "White-label deployed, brand voice calibrated, Winner DNA loaded. You do nothing.", color: C.mint, anim: "slideUp" },
+                  { icon: "🔥", time: "Day 2", title: "Better content rolling", desc: "First campaigns generated. Already scoring higher than your manual work.", color: C.coral, anim: "swipeRight" },
+                ].map((card, i) => (
+                  <SwipeCard key={i} delay={i * 150} direction={card.anim}>
+                    <div style={{
+                      background: C.nightCard, borderRadius: 16, padding: "28px 22px", position: "relative", overflow: "hidden",
+                      border: `1px solid ${card.color}20`, height: "100%",
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-6px) rotate(-0.5deg)"; e.currentTarget.style.boxShadow = `0 16px 40px ${card.color}15`; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0) rotate(0)"; e.currentTarget.style.boxShadow = "none"; }}
+                    >
+                      <div style={{ position: "absolute", top: -10, right: -10, width: 60, height: 60, borderRadius: "50%", background: `radial-gradient(circle, ${card.color}20, transparent 70%)`, filter: "blur(15px)" }} />
+                      <div style={{ fontSize: 36, marginBottom: 10, filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))" }}>{card.icon}</div>
+                      <div style={{ display: "inline-block", padding: "3px 10px", borderRadius: 100, background: `${card.color}15`, fontSize: 10, fontWeight: 700, color: card.color, fontFamily: "'JetBrains Mono', monospace", marginBottom: 10, letterSpacing: 0.5 }}>{card.time}</div>
+                      <div style={{ fontSize: 17, fontWeight: 800, color: C.text, marginBottom: 6 }}>{card.title}</div>
+                      <div style={{ fontSize: 13, color: C.textSoft, lineHeight: 1.6 }}>{card.desc}</div>
+                    </div>
+                  </SwipeCard>
+                ))}
+              </div>
+
+              {/* SPEED TICKER */}
+              <div style={{ marginTop: 28, overflow: "hidden", borderRadius: 10, background: "rgba(129,140,248,0.04)", border: "1px solid rgba(129,140,248,0.1)", padding: "10px 0" }}>
+                <div style={{ display: "flex", gap: 40, animation: "marquee 20s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
+                  {[...Array(2)].flatMap(() => [
+                    "No developers needed", "Live in 24 hours", "Upload CSV and go", "AI learns YOUR brand", "Scores improve every day", "White-label included", "No code. No setup headaches.", "From data to campaigns in minutes",
+                  ]).map((t, i) => (
+                    <span key={i} style={{ fontSize: 11, fontWeight: 600, color: C.textSoft, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", background: C.mint, display: "inline-block" }} />{t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* TERMINAL */}
       <Reveal style={{ padding: "50px 20px", maxWidth: 700, margin: "0 auto" }}>
         <div id="demo" style={{ textAlign: "center", marginBottom: 32 }}>
@@ -266,47 +360,70 @@ export default function App() {
         </div>
       </Reveal>
 
-      {/* FEATURES */}
+      {/* FEATURES — ANIMATED SWIPE CARDS */}
       <div id="features" style={{ padding: "80px 20px", maxWidth: 980, margin: "0 auto" }}>
         <Reveal style={{ textAlign: "center", marginBottom: 48 }}>
           <div style={{ fontSize: 10, color: C.electric, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>What You Get</div>
           <h2 style={{ fontSize: 28, fontWeight: 700 }}>Not Another AI Writer. A Learning Content Engine.</h2>
         </Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
-          <FCard icon="🧬" title="Winner DNA Extraction" desc="Analyzes approved campaigns to extract winning patterns — subject lines, CTAs, tone, length. Every new campaign inherits them." color={C.electric} delay={0} />
-          <FCard icon="🎯" title="Brand Score (0–100)" desc="5-dimension scoring: voice, vocabulary, tone, compliance, channel fit. Set minimums. Kill off-brand content before it ships." color={C.mint} delay={80} />
-          <FCard icon="📊" title="Performance Dashboard" desc="Before vs. After with real numbers. +41% open rate lift is what renews contracts. Exportable PDF reports." color={C.amber} delay={160} />
-          <FCard icon="🏷️" title="Instant White-Label" desc="Upload brand book or screenshot. AI extracts colors, fonts, voice. Module re-skins in seconds. Clients see THEIR tool." color={C.coral} delay={240} />
-          <FCard icon="🌍" title="Multi-Language Native" desc="15+ languages — native generation, not translation. Per-market compliance rules built in." color={C.electric} delay={320} />
-          <FCard icon="🔗" title="CRM Integration" desc="Import from Optimove, Extreme Push, or any CRM via CSV. More data in, smarter output." color={C.mint} delay={400} />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+          {[
+            { icon: "🧬", title: "Winner DNA Extraction", desc: "Analyzes approved campaigns to extract winning patterns — subject lines, CTAs, tone, length. Every new campaign inherits them.", color: C.electric, dir: "swipeIn" },
+            { icon: "🎯", title: "Brand Score (0–100)", desc: "5-dimension scoring: voice, vocabulary, tone, compliance, channel fit. Set minimums. Kill off-brand content before it ships.", color: C.mint, dir: "zoomPop" },
+            { icon: "📊", title: "Performance Dashboard", desc: "Before vs. After with real numbers. +41% open rate lift is what renews contracts. Exportable PDF reports.", color: C.amber, dir: "swipeRight" },
+            { icon: "🏷️", title: "Instant White-Label", desc: "Upload brand book or screenshot. AI extracts colors, fonts, voice. Module re-skins in seconds. Clients see THEIR tool.", color: C.coral, dir: "swipeIn" },
+            { icon: "🌍", title: "Multi-Language Native", desc: "15+ languages — native generation, not translation. Per-market compliance rules built in.", color: C.electric, dir: "zoomPop" },
+            { icon: "🔗", title: "CRM Integration", desc: "Import from Optimove, Extreme Push, or any CRM via CSV. More data in, smarter output.", color: C.mint, dir: "swipeRight" },
+          ].map((card, i) => (
+            <SwipeCard key={i} delay={i * 100} direction={card.dir}>
+              <div style={{
+                background: C.nightCard, border: `1px solid ${card.color}15`, borderRadius: 18, padding: "30px 24px", height: "100%",
+                position: "relative", overflow: "hidden", transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px) scale(1.01)"; e.currentTarget.style.borderColor = `${card.color}40`; e.currentTarget.style.boxShadow = `0 20px 50px ${card.color}12`; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0) scale(1)"; e.currentTarget.style.borderColor = `${card.color}15`; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <div style={{ position: "absolute", top: -20, right: -20, width: 80, height: 80, borderRadius: "50%", background: `radial-gradient(circle, ${card.color}18, transparent 70%)`, filter: "blur(18px)" }} />
+                <div style={{ fontSize: 32, marginBottom: 14, filter: "drop-shadow(0 3px 10px rgba(0,0,0,0.4))" }}>{card.icon}</div>
+                <div style={{ fontSize: 16, fontWeight: 800, color: C.text, marginBottom: 8 }}>{card.title}</div>
+                <div style={{ fontSize: 13, color: C.textSoft, lineHeight: 1.7 }}>{card.desc}</div>
+              </div>
+            </SwipeCard>
+          ))}
         </div>
       </div>
 
-      {/* HOW IT WORKS */}
-      <div id="how" style={{ padding: "80px 20px", maxWidth: 740, margin: "0 auto" }}>
+      {/* HOW IT WORKS — ANIMATED STEPS */}
+      <div id="how" style={{ padding: "80px 20px", maxWidth: 800, margin: "0 auto" }}>
         <Reveal style={{ textAlign: "center", marginBottom: 48 }}>
           <div style={{ fontSize: 10, color: C.electric, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>The Learning Loop</div>
           <h2 style={{ fontSize: 28, fontWeight: 700 }}>Gets Smarter Every Campaign</h2>
         </Reveal>
-        {[
-          { s: "01", t: "Generate", d: "One brief → 5 channels → 3 variants each. Brand voice + Winner DNA power every word.", icon: "⚡", c: C.electric },
-          { s: "02", t: "Score & Approve", d: "Every variant gets a Brand Score. Approve, steer, or reject. Every decision teaches the system.", icon: "✅", c: C.mint },
-          { s: "03", t: "Measure", d: "Import real campaign results. The system maps content patterns to performance outcomes.", icon: "📈", c: C.amber },
-          { s: "04", t: "Learn & Improve", d: "Winner DNA updates. Next campaign inherits everything that worked. Scores climb. Results compound.", icon: "🧠", c: C.coral },
-        ].map((x, i) => (
-          <Reveal key={i} delay={i * 90}>
-            <div style={{ display: "flex", gap: 18, padding: "24px 0", borderBottom: i < 3 ? `1px solid ${C.border}` : "none" }}>
-              <div style={{ minWidth: 46, height: 46, borderRadius: 12, background: `${x.c}0F`, border: `1px solid ${x.c}1A`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{x.icon}</div>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 5 }}>
-                  <span style={{ fontSize: 10, color: x.c, fontFamily: "'JetBrains Mono', monospace", fontWeight: 500 }}>{x.s}</span>
-                  <span style={{ fontSize: 17, fontWeight: 700 }}>{x.t}</span>
-                </div>
-                <p style={{ fontSize: 13, color: C.textSoft, lineHeight: 1.7 }}>{x.d}</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+          {[
+            { s: "01", t: "Generate", d: "One brief, 5 channels, 3 variants each. Winner DNA powers every word.", icon: "⚡", c: C.electric, dir: "swipeIn" },
+            { s: "02", t: "Score & Ship", d: "Brand Score gates every variant. Approve, steer, reject. System learns from you.", icon: "✅", c: C.mint, dir: "slideUp" },
+            { s: "03", t: "Measure", d: "Import results. AI maps content patterns to performance. Knows what actually works.", icon: "📈", c: C.amber, dir: "slideUp" },
+            { s: "04", t: "Level Up", d: "DNA updates. Next campaign is better. Scores climb. Results compound. Forever.", icon: "🧠", c: C.coral, dir: "swipeRight" },
+          ].map((x, i) => (
+            <SwipeCard key={i} delay={i * 120} direction={x.dir}>
+              <div style={{
+                background: C.nightCard, borderRadius: 18, padding: "28px 22px", height: "100%",
+                border: `1px solid ${x.c}15`, position: "relative", overflow: "hidden",
+                transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.borderColor = `${x.c}40`; e.currentTarget.style.boxShadow = `0 14px 36px ${x.c}12`; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = `${x.c}15`; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <div style={{ position: "absolute", top: -10, right: -10, width: 60, height: 60, borderRadius: "50%", background: `radial-gradient(circle, ${x.c}15, transparent 70%)`, filter: "blur(12px)" }} />
+                <div style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, color: x.c, marginBottom: 8, letterSpacing: 1 }}>{x.s}</div>
+                <div style={{ fontSize: 32, marginBottom: 12, filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))" }}>{x.icon}</div>
+                <div style={{ fontSize: 17, fontWeight: 800, color: C.text, marginBottom: 6 }}>{x.t}</div>
+                <p style={{ fontSize: 13, color: C.textSoft, lineHeight: 1.65 }}>{x.d}</p>
               </div>
-            </div>
-          </Reveal>
-        ))}
+            </SwipeCard>
+          ))}
+        </div>
       </div>
 
       {/* ═══ CONFIGURATOR ═══ */}
