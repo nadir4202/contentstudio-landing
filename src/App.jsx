@@ -228,6 +228,7 @@ export default function App() {
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           <a href="#features" style={{ color: C.textSoft, textDecoration: "none", fontSize: 12, fontWeight: 500 }}>Features</a>
           <a href="#how" style={{ color: C.textSoft, textDecoration: "none", fontSize: 12, fontWeight: 500 }}>How It Works</a>
+          <a href="#guide" style={{ color: C.textSoft, textDecoration: "none", fontSize: 12, fontWeight: 500 }}>Get Started</a>
           <button onClick={goCfg} style={{ padding: "7px 18px", borderRadius: 100, border: `1px solid ${C.electric}`, background: "transparent", color: C.electricBright, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>Get Started</button>
         </div>
       </header>
@@ -424,6 +425,262 @@ export default function App() {
             </SwipeCard>
           ))}
         </div>
+      </div>
+
+      {/* ═══ GETTING STARTED — 5-STEP GUIDE ═══ */}
+      <div id="guide" style={{ padding: "80px 20px 20px", maxWidth: 860, margin: "0 auto" }}>
+        <Reveal style={{ textAlign: "center", marginBottom: 52 }}>
+          <div style={{ fontSize: 10, color: C.electric, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Setup Guide</div>
+          <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 800, lineHeight: 1.1, letterSpacing: -0.8 }}>
+            Up and running in{" "}
+            <span style={{ background: `linear-gradient(135deg, ${C.electric}, ${C.mint})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>5 steps.</span>
+          </h2>
+          <p style={{ fontSize: 14, color: C.textSoft, marginTop: 12, maxWidth: 460, margin: "12px auto 0", lineHeight: 1.7 }}>
+            Configure your brand, feed it your winners, and let the AI learn what works — then scale it across every channel.
+          </p>
+        </Reveal>
+
+        {/* Step pills row */}
+        <Reveal style={{ marginBottom: 60 }}>
+          <div style={{ display: "flex", borderRadius: 14, border: `1px solid ${C.border}`, overflow: "hidden", background: C.nightCard }}>
+            {[
+              { n: "01", icon: "🌐", label: "Create Site" },
+              { n: "02", icon: "📚", label: "Brand Knowledge" },
+              { n: "03", icon: "🧬", label: "Winner DNA", highlight: true },
+              { n: "04", icon: "🎙️", label: "Brand Voice" },
+              { n: "05", icon: "🚀", label: "First Campaign" },
+            ].map((p, i) => (
+              <div key={i} style={{ flex: 1, padding: "14px 8px", textAlign: "center", borderRight: i < 4 ? `1px solid ${C.border}` : "none", background: p.highlight ? "rgba(245,200,0,0.04)" : "transparent" }}>
+                <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: p.highlight ? "#F5C800" : C.textDim, marginBottom: 5, fontWeight: 600 }}>{p.n}</div>
+                <div style={{ fontSize: 18, marginBottom: 4 }}>{p.icon}</div>
+                <div style={{ fontSize: 10, fontWeight: 600, color: p.highlight ? "#F5C800" : C.textSoft, lineHeight: 1.3 }}>{p.label}</div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Steps */}
+        {[
+          {
+            n: "01", color: C.electric, tag: "Manage Sites", title: "Create Your Site",
+            body: (
+              <div style={{ padding: 28 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
+                  {[["Site name","Your brand name"],["URL","yourdomain.com"],["Niche","Casino · Sportsbook · iGaming…"],["Primary Market","Select market"]].map(([lbl,ph],i) => (
+                    <div key={i} style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                      <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, fontWeight: 600 }}>{lbl}</div>
+                      <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "10px 13px", fontSize: 13, color: "rgba(255,255,255,0.25)", fontStyle: "italic" }}>{ph}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 18 }}>
+                  <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, fontWeight: 600 }}>Compliance Rules</div>
+                  <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "10px 13px", fontSize: 13, color: "rgba(255,255,255,0.25)", fontStyle: "italic" }}>Add your regulator, age restrictions, required disclaimers…</div>
+                </div>
+                <div style={{ padding: "12px 16px", background: `rgba(129,140,248,0.05)`, border: `1px solid rgba(129,140,248,0.12)`, borderRadius: 10, fontSize: 12, color: C.textSoft, lineHeight: 1.6 }}>
+                  <span style={{ color: C.electricBright, fontWeight: 600 }}>💡 Pro tip:</span> Compliance rules are injected into every AI generation — add your regulator name, disclaimers, and age restrictions here. They'll never be missed.
+                </div>
+              </div>
+            ),
+          },
+          {
+            n: "02", color: C.accent2 || "#7B5CFA", tag: "Knowledge Base", title: "Upload Brand Knowledge",
+            body: (
+              <div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+                  {[
+                    { icon: "✉️", title: "Paste Text", desc: "Previous emails, newsletters, promo copy — paste directly" },
+                    { icon: "🔗", title: "From URL", desc: "Scrape your website — about, promos, landing pages" },
+                    { icon: "📄", title: "PDF Upload", desc: "Brand guides, style guides, tone of voice documents" },
+                    { icon: "📁", title: "File Upload", desc: "Presentations, Word docs, any text file" },
+                  ].map((u, i) => (
+                    <div key={i} style={{ padding: "22px 24px", borderRight: i % 2 === 0 ? `1px solid ${C.border}` : "none", borderBottom: i < 2 ? `1px solid ${C.border}` : "none", display: "flex", gap: 14, alignItems: "flex-start" }}>
+                      <div style={{ width: 38, height: 38, borderRadius: 9, background: "rgba(255,255,255,0.05)", border: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>{u.icon}</div>
+                      <div>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: C.text, marginBottom: 4 }}>{u.title}</div>
+                        <div style={{ fontSize: 12, color: C.textSoft, lineHeight: 1.5 }}>{u.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ padding: "14px 24px 20px" }}>
+                  <div style={{ padding: "12px 16px", background: "rgba(123,92,250,0.05)", border: "1px solid rgba(123,92,250,0.15)", borderRadius: 10, fontSize: 12, color: C.textSoft, lineHeight: 1.6 }}>
+                    <span style={{ color: "#A78BFA", fontWeight: 600 }}>💡 Pro tip:</span> The more examples you upload, the better the AI matches your voice. Start with <strong style={{ color: C.text }}>3–5 of your best-performing pieces.</strong>
+                  </div>
+                </div>
+              </div>
+            ),
+          },
+          {
+            n: "03", color: "#F5C800", tag: "Winner DNA", title: "Learn From Your Best Content",
+            highlight: true,
+            body: (
+              <div>
+                <div style={{ padding: "22px 28px 20px", borderBottom: `1px solid ${C.border}`, fontSize: 13, color: C.textSoft, lineHeight: 1.75 }}>
+                  <strong style={{ color: C.text }}>This is the engine.</strong> Tag your historically best-performing content across every channel. The AI reverse-engineers what made them win — hook structure, urgency triggers, CTA patterns, send timing. That DNA gets embedded into every future generation so your best results aren't luck. <strong style={{ color: "#F5C800" }}>They're a repeatable formula.</strong>
+                </div>
+                <div style={{ padding: "20px 28px", borderBottom: `1px solid ${C.border}` }}>
+                  <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, fontWeight: 600, marginBottom: 14 }}>Tag your top performers</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+                    {[
+                      { rank: "#1", ch: "Email", chColor: C.electric, preview: "Your best-performing subject line or opening hook", k1: "Open", k2: "CTR" },
+                      { rank: "#2", ch: "Push", chColor: "#FB7185", preview: "Your top push notification — highest click-through in the last 90 days", k1: "CTR", k2: "Conv" },
+                      { rank: "#3", ch: "SMS", chColor: "#F5C800", preview: "Your highest-converting SMS — short, punchy, and it worked", k1: "Conv", k2: "Rev" },
+                      { rank: "#4", ch: "Social", chColor: "#A78BFA", preview: "Your viral social post — most engagement, most shares", k1: "Eng", k2: "Reach" },
+                    ].map((w, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: "rgba(255,255,255,0.02)", border: `1px solid ${C.border}`, borderRadius: 10 }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 12, color: "#F5C800", width: 22, flexShrink: 0 }}>{w.rank}</div>
+                        <div style={{ fontSize: 10, padding: "2px 8px", borderRadius: 20, background: `${w.chColor}12`, border: `1px solid ${w.chColor}30`, color: w.chColor, fontWeight: 600, letterSpacing: 0.5, flexShrink: 0 }}>{w.ch}</div>
+                        <div style={{ flex: 1, fontSize: 12, color: "rgba(255,255,255,0.45)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{w.preview}</div>
+                        <div style={{ display: "flex", gap: 16, flexShrink: 0 }}>
+                          {[w.k1, w.k2].map((k, j) => (
+                            <div key={j} style={{ textAlign: "center" }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 11, color: C.electric }}>—</div>
+                              <div style={{ fontSize: 9, color: C.textDim, letterSpacing: 1, textTransform: "uppercase" }}>{k}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ padding: "20px 28px", display: "flex", gap: 20, alignItems: "flex-start", borderBottom: `1px solid ${C.border}` }}>
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+                    {[
+                      ["Hook pattern", "Urgency + personalization in first 6 words"],
+                      ["CTA structure", "Action verb + benefit, max 4 words"],
+                      ["Optimal length", "Winners avg 42 words push, 180 email"],
+                      ["Tone signal", "Direct, second-person always outperforms"],
+                      ["Timing pattern", "Top performers sent Tue/Thu 10–11am"],
+                    ].map(([label, detail], i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 13px", background: "rgba(245,200,0,0.04)", border: "1px solid rgba(245,200,0,0.1)", borderRadius: 8 }}>
+                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F5C800", flexShrink: 0, boxShadow: "0 0 6px rgba(245,200,0,0.5)" }} />
+                        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.4 }}><strong style={{ color: "#F5C800" }}>{label}</strong> — {detail}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: 18, color: C.textDim, alignSelf: "center", flexShrink: 0 }}>→</div>
+                  <div style={{ width: 150, background: "linear-gradient(135deg, rgba(245,200,0,0.08), rgba(123,92,250,0.06))", border: "1px solid rgba(245,200,0,0.2)", borderRadius: 12, padding: "20px 16px", textAlign: "center", flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                    <div style={{ fontSize: 28 }}>🧬</div>
+                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 11, letterSpacing: 1, color: "#F5C800", textTransform: "uppercase" }}>Winner DNA<br/>Locked</div>
+                    <div style={{ fontSize: 10, color: C.textDim, lineHeight: 1.5 }}>Embedded into every future generation automatically</div>
+                  </div>
+                </div>
+                <div style={{ padding: "14px 28px 20px" }}>
+                  <div style={{ padding: "12px 16px", background: "rgba(245,200,0,0.04)", border: "1px solid rgba(245,200,0,0.12)", borderRadius: 10, fontSize: 12, color: C.textSoft, lineHeight: 1.6 }}>
+                    <span style={{ color: "#F5C800", fontWeight: 600 }}>🧬 This is the compounding advantage.</span> Every campaign you approve feeds back into the DNA. The longer you use ContentStudio, the smarter — and more on-brand — every generation gets.
+                  </div>
+                </div>
+              </div>
+            ),
+          },
+          {
+            n: "04", color: "#FB7185", tag: "Brand Voice", title: "Define Your Brand Voice",
+            body: (
+              <div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+                  <div style={{ padding: "28px 24px", borderRight: `1px solid ${C.border}`, position: "relative" }}>
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${C.electric}, #7B5CFA)` }} />
+                    <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, marginBottom: 12, fontWeight: 600 }}>Option A</div>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: C.text, marginBottom: 8 }}>AI Interview</div>
+                    <div style={{ fontSize: 13, color: C.textSoft, lineHeight: 1.6, marginBottom: 16 }}>Answer 8 quick questions. The AI builds your complete brand profile automatically.</div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                      {["Who is your target audience?","How would you describe your tone?","What makes you different?","Words you'd never use?"].map((q, i) => (
+                        <div key={i} style={{ padding: "8px 12px", background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`, borderRadius: 7, fontSize: 12, color: "rgba(255,255,255,0.4)", display: "flex", alignItems: "center", gap: 8 }}>
+                          <div style={{ width: 4, height: 4, borderRadius: "50%", background: C.electric, flexShrink: 0 }} />"{q}"
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ padding: "28px 24px" }}>
+                    <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, marginBottom: 12, fontWeight: 600 }}>Option B</div>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: C.text, marginBottom: 8 }}>Brand Setup</div>
+                    <div style={{ fontSize: 13, color: C.textSoft, lineHeight: 1.6, marginBottom: 16 }}>Upload a screenshot or brand book PDF — AI extracts your full identity in one click.</div>
+                    <div style={{ border: "2px dashed rgba(255,255,255,0.1)", borderRadius: 12, padding: "26px 20px", textAlign: "center" }}>
+                      <div style={{ fontSize: 26, marginBottom: 8 }}>📎</div>
+                      <div style={{ fontSize: 12, color: C.textSoft, lineHeight: 1.6 }}>Drop your <strong style={{ color: C.electric }}>brand book</strong> or website screenshot here<br/>AI extracts everything instantly</div>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ padding: "14px 24px 20px", borderTop: `1px solid ${C.border}` }}>
+                  <div style={{ padding: "12px 16px", background: "rgba(251,113,133,0.05)", border: "1px solid rgba(251,113,133,0.12)", borderRadius: 10, fontSize: 12, color: C.textSoft, lineHeight: 1.6 }}>
+                    <span style={{ color: "#FB7185", fontWeight: 600 }}>💡 Pro tip:</span> Brand Voice powers every generation. You can always refine it later as your brand evolves.
+                  </div>
+                </div>
+              </div>
+            ),
+          },
+          {
+            n: "05", color: "#F5C800", tag: "Campaigns", title: "Generate Your First Campaign",
+            body: (
+              <div>
+                <div style={{ padding: "22px 28px", borderBottom: `1px solid ${C.border}` }}>
+                  <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, marginBottom: 10, fontWeight: 600 }}>Your brief</div>
+                  <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "13px 14px", fontSize: 13, color: "rgba(255,255,255,0.3)", marginBottom: 14, fontStyle: "italic" }}>
+                    Describe your campaign goal — audience, tone, objective, channel…
+                  </div>
+                  <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, marginBottom: 10, fontWeight: 600 }}>Channels</div>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    {[["📧 Email", true],["📱 Push", true],["💬 SMS", false],["📣 Social", true],["📝 Blog", false]].map(([ch, on], i) => (
+                      <div key={i} style={{ padding: "5px 13px", borderRadius: 20, fontSize: 11, fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", background: on ? `rgba(129,140,248,0.12)` : "rgba(255,255,255,0.04)", border: `1px solid ${on ? "rgba(129,140,248,0.3)" : C.border}`, color: on ? C.electricBright : C.textDim }}>{ch}</div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
+                  {[
+                    { label: "Variant A", score: "82", scoreColor: C.electric },
+                    { label: "Variant B", score: "65", scoreColor: "#A78BFA" },
+                    { label: "Variant C", score: "88", scoreColor: "#F5C800" },
+                  ].map((v, i) => (
+                    <div key={i} style={{ padding: "20px", borderRight: i < 2 ? `1px solid ${C.border}` : "none" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                        <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: C.textDim, fontWeight: 600 }}>{v.label}</div>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 13, color: v.scoreColor, background: `${v.scoreColor}12`, padding: "2px 8px", borderRadius: 6 }}>{v.score}</div>
+                      </div>
+                      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.6, marginBottom: 12 }}>
+                        {i === 0 && <><strong style={{ color: C.text }}>Your headline here.</strong> A compelling value proposition tailored to your audience and brand voice.</>}
+                        {i === 1 && <>An alternative angle. <strong style={{ color: C.text }}>Different hook,</strong> same goal — let the AI explore more than one direction.</>}
+                        {i === 2 && <><strong style={{ color: C.text }}>Third take.</strong> The highest scorer — concise, on-brand, ready to publish or refine further.</>}
+                      </div>
+                      <div style={{ display: "flex", gap: 6 }}>
+                        <button style={{ fontSize: 10, letterSpacing: 0.5, textTransform: "uppercase", fontWeight: 600, padding: "4px 9px", borderRadius: 6, background: `${v.scoreColor}10`, color: v.scoreColor, border: `1px solid ${v.scoreColor}25`, cursor: "pointer" }}>✓ Approve</button>
+                        <button style={{ fontSize: 10, letterSpacing: 0.5, textTransform: "uppercase", fontWeight: 600, padding: "4px 9px", borderRadius: 6, background: "rgba(255,255,255,0.04)", color: C.textDim, border: `1px solid ${C.border}`, cursor: "pointer" }}>Steer</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ),
+          },
+        ].map((s, idx) => (
+          <Reveal key={idx} delay={idx * 60} style={{ marginBottom: 56 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 20, marginBottom: 20 }}>
+              <div style={{ width: 46, height: 46, borderRadius: 13, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative", background: `${s.color}14`, border: `1px solid ${s.color}30` }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 14, color: s.color }}>{s.n}</span>
+              </div>
+              <div>
+                <div style={{ fontSize: 9, letterSpacing: 2.5, textTransform: "uppercase", color: s.color, marginBottom: 5, fontWeight: 600 }}>Step {s.n} · {s.tag}</div>
+                <h3 style={{ fontSize: "clamp(18px,2.5vw,24px)", fontWeight: 800, color: C.text, lineHeight: 1.1 }}>{s.title}</h3>
+              </div>
+            </div>
+            <div style={{ background: C.nightCard, border: `1px solid ${s.highlight ? "rgba(245,200,0,0.15)" : C.border}`, borderRadius: 16, overflow: "hidden", position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: 1, background: `linear-gradient(90deg, transparent, ${s.color}, transparent)`, opacity: 0.3 }} />
+              {s.body}
+            </div>
+            {idx < 4 && <div style={{ display: "flex", justifyContent: "center", margin: "16px 0 0" }}><div style={{ width: 2, height: 48, background: `linear-gradient(to bottom, ${s.color}40, transparent)` }} /></div>}
+          </Reveal>
+        ))}
+
+        {/* Done state */}
+        <Reveal style={{ textAlign: "center", padding: "40px 20px 60px" }}>
+          <div style={{ width: 68, height: 68, borderRadius: 20, background: `linear-gradient(135deg, rgba(129,140,248,0.15), rgba(52,211,153,0.1))`, border: `1px solid rgba(129,140,248,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 22px", fontSize: 28, boxShadow: "0 0 40px rgba(129,140,248,0.15)", animation: "fl 3s ease-in-out infinite" }}>⚡</div>
+          <h2 style={{ fontSize: "clamp(22px,4vw,32px)", fontWeight: 800, marginBottom: 10, letterSpacing: -0.5 }}>
+            You're all set.{" "}
+            <span style={{ background: `linear-gradient(135deg, ${C.electric}, ${C.mint})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Start creating.</span>
+          </h2>
+          <p style={{ fontSize: 14, color: C.textSoft, lineHeight: 1.7, maxWidth: 380, margin: "0 auto 28px" }}>Your brand is configured, your voice is defined, the Winner DNA is loaded. Multi-channel content in seconds.</p>
+          <button onClick={goCfg} style={{ padding: "15px 36px", borderRadius: 10, border: "none", background: `linear-gradient(135deg, ${C.electric}, ${C.mint}CC)`, color: C.night, fontSize: 14, fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 24px rgba(129,140,248,0.25)", letterSpacing: 0.5 }}>Configure My Instance →</button>
+        </Reveal>
       </div>
 
       {/* ═══ CONFIGURATOR ═══ */}
